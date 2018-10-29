@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 3.0.0">
+  <meta name="generator" content="Hugo 0.49.2" />
+  <meta name="author" content="Abdou Khouakhi">
+
+  
+  
+  
+  
+    
+  
+  <meta name="description" content="My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="/post/cycline_dist/cyc_mrcd/">
+
+  
+
+
+  
+
+  
+
+  
+
+  
+  
+  
+  <meta name="theme-color" content="#3f51b5">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" crossorigin="anonymous">
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Montserrat:400,700|Roboto:400,400italic,700|Roboto+Mono">
+  
+
+  <link rel="stylesheet" href="/styles.css">
+  
+
+  
+  
+  
+
+  
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="A.Khouakhi">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="A.Khouakhi">
+  
+
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="/post/cycline_dist/cyc_mrcd/">
+
+  <meta property="twitter:card" content="summary_large_image">
+  
+  <meta property="og:site_name" content="A.Khouakhi">
+  <meta property="og:url" content="/post/cycline_dist/cyc_mrcd/">
+  <meta property="og:title" content="Cycling time | A.Khouakhi">
+  <meta property="og:description" content="My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R.">
+  
+  
+    
+  <meta property="og:image" content="/img/icon-192.png">
+  <meta property="og:locale" content="en-us">
+  
+  <meta property="article:published_time" content="2016-11-29T00:00:00&#43;00:00">
+  
+  <meta property="article:modified_time" content="2016-11-29T00:00:00&#43;00:00">
+  
+
+  
+
+  
+
+  <title>Cycling time | A.Khouakhi</title>
+
+</head>
+<body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
+
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">A.Khouakhi</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav ml-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link" href="/#about">
+            
+            <span>Home</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link" href="/#publications">
+            
+            <span>Publications</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link" href="/#posts">
+            
+            <span>Posts</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link" href="/#contact">
+            
+            <span>Contact</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link" href="/files/Abdou_khouakhi_CV.pdf">
+            
+            <span>CV</span>
+            
+          </a>
+        </li>
+
+        
+        
+
+      
+
+        
+
+        
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+<article class="article" itemscope itemtype="http://schema.org/Article">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+  
+  
+<div class="article-container pt-3">
+  <h1 itemprop="name">Cycling time</h1>
+
+  
+
+  
+    
+
+<div class="article-metadata">
+
+  
+  
+  <span itemscope itemprop="author" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Abdou Khouakhi">
+  </span>
+  
+
+  <span class="article-date">
+    
+    <meta content="2016-11-29 00:00:00 &#43;0000 UTC" itemprop="datePublished">
+    <time datetime="2016-11-29 00:00:00 &#43;0000 UTC" itemprop="dateModified">
+      Nov 29, 2016
+    </time>
+  </span>
+  <span itemscope itemprop="publisher" itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Abdou Khouakhi">
+  </span>
+
+  
+  <span class="middot-divider"></span>
+  <span class="article-reading-time">
+    5 min read
+  </span>
+  
+
+  
+  
+  <span class="middot-divider"></span>
+  <a href="/post/cycline_dist/cyc_mrcd/#disqus_thread"></a>
+  
+
+  
+  
+  
+  
+
+  
+  
+<div class="share-box" aria-hidden="true">
+  <ul class="share">
+    <li>
+      <a class="twitter"
+         href="https://twitter.com/intent/tweet?text=Cycling%20time&amp;url=%2fpost%2fcycline_dist%2fcyc_mrcd%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-twitter"></i>
+      </a>
+    </li>
+    <li>
+      <a class="facebook"
+         href="https://www.facebook.com/sharer.php?u=%2fpost%2fcycline_dist%2fcyc_mrcd%2f"
+         target="_blank" rel="noopener">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+    </li>
+    <li>
+      <a class="linkedin"
+         href="https://www.linkedin.com/shareArticle?mini=true&amp;url=%2fpost%2fcycline_dist%2fcyc_mrcd%2f&amp;title=Cycling%20time"
+         target="_blank" rel="noopener">
+        <i class="fab fa-linkedin-in"></i>
+      </a>
+    </li>
+    <li>
+      <a class="weibo"
+         href="http://service.weibo.com/share/share.php?url=%2fpost%2fcycline_dist%2fcyc_mrcd%2f&amp;title=Cycling%20time"
+         target="_blank" rel="noopener">
+        <i class="fab fa-weibo"></i>
+      </a>
+    </li>
+    <li>
+      <a class="email"
+         href="mailto:?subject=Cycling%20time&amp;body=%2fpost%2fcycline_dist%2fcyc_mrcd%2f">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+  
+
+</div>
+
+  
+</div>
+
+
+
+  <div class="article-container">
+
+    <div class="article-style" itemprop="articleBody">
+      <p><img src="/img/racing.jpg" /></p>
+<p>My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R.
+So here is the breakdown of what I did:</p>
+<div id="finding-the-different-localities-in-a-radius-of-100km-from-bryans-home" class="section level3">
+<h3>1. Finding the different localities in a radius of 100Km from Bryan’s home:</h3>
+<p>For this, I used the package <code>geonames</code> which is an interface to the GeoNames global geographical database. To be able to use the library functions you need a username by creating an account using <a href="http://www.geonames.org/">Geonames website</a>.<br />
+I use the <code>GNfindNearbyPlaceName</code> function that take 5 arguments <code>lat</code>, <code>lng</code>, <code>radius</code>, <code>search</code>,
+and <code>maxRows</code>. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)</p>
+<pre class="r"><code># load the package
+library(geonames)
+# set your geonames username
+options(geonamesUsername = &quot;khouakhi&quot;)
+# In this example
+loc1 &lt;- GNfindNearbyPlaceName(48.828583, 2.508224,
+  radius = &quot;100&quot;,
+  maxRows = &quot;10&quot;, style = &quot;MEDIUM&quot;
+)
+head(loc1, n = 3)                            </code></pre>
+<pre><code>##   adminCode1     lng distance geonameId         toponymName countryId fcl
+## 1         11 2.52488  1.61759   3029706       Bry-sur-Marne   3017382   P
+## 2         11 2.49366   1.7245   3027105 Champigny-sur-Marne   3017382   P
+## 3         11 2.48333  1.90227   2990265    Nogent-sur-Marne   3017382   P
+##   population countryCode                name           fclName
+## 1      16226          FR       Bry-sur-Marne city, village,...
+## 2      76726          FR Champigny-sur-Marne city, village,...
+## 3      31236          FR    Nogent-sur-Marne city, village,...
+##   adminCodes1.ISO3166_2 countryName
+## 1                   IDF      France
+## 2                   IDF      France
+## 3                   IDF      France
+##                                       fcodeName    adminName1      lat
+## 1                               populated place Île-de-France 48.83811
+## 2                               populated place Île-de-France 48.81642
+## 3 seat of a third-order administrative division Île-de-France 48.83333
+##   fcode
+## 1   PPL
+## 2   PPL
+## 3 PPLA3</code></pre>
+<p>Basically all that we need from this data frame is the longitude, latitude and locality names. The function returns also the euclidean distance between two locations so let’s keep the distance column as well.</p>
+<pre class="r"><code>loc2 &lt;- loc1[c(&quot;name&quot;, &quot;lng&quot;, &quot;lat&quot;, &quot;distance&quot;)]
+head(loc2)</code></pre>
+<pre><code>##                   name     lng      lat distance
+## 1        Bry-sur-Marne 2.52488 48.83811  1.61759
+## 2  Champigny-sur-Marne 2.49366 48.81642   1.7245
+## 3     Nogent-sur-Marne 2.48333 48.83333  1.90227
+## 4           Champignol  2.5056 48.80865  2.22481
+## 5 Le Perreux-sur-Marne     2.5    48.85  2.45703
+## 6    Joinville-le-Pont 2.47458 48.82538  2.49615</code></pre>
+<pre class="r"><code># transform the longitude and latitude from character to numeric
+loc2[c(2, 3, 4)] &lt;- lapply(loc2[c(2, 3, 4)], as.numeric)
+sapply(loc2, class)</code></pre>
+<pre><code>##        name         lng         lat    distance 
+## &quot;character&quot;   &quot;numeric&quot;   &quot;numeric&quot;   &quot;numeric&quot;</code></pre>
+</div>
+<div id="finding-the-cyling-distance-and-time" class="section level3">
+<h3>2. Finding the cyling distance and time:</h3>
+<p>Now that we got the localities, we will use the <code>ggmap</code> package to access distances from the Google Maps API, specifically we are going to use the <code>mapdist</code> function that returns distances in Km and miles but also time in hours and minutes.</p>
+<pre class="r"><code>library(gmapsdistance)
+library(stringr)
+# First let&#39;s add the word &quot;France&quot; the localitie names
+loc2$name &lt;- paste0(loc2$name, &quot;+&quot;, &quot;France&quot;)
+# add (+) in white spaces to allow google to serach for the localities
+loc2$name &lt;- str_replace_all(loc2$name, pattern = &quot; &quot;, repl = &quot;+&quot;)
+# create a loop to calculate cycling distance and time from the home location to every town.
+mylist &lt;- list()
+home_adress &lt;- &quot;101+Quai+Louis+Ferber+94360+Bry-sur-Marne+France&quot;
+for (n in loc2$name) {
+  dist &lt;- gmapsdistance(
+    origin = home_adress, destination = n,
+    mode = &quot;bicycling&quot;, key = &quot;your key&quot;
+  )
+
+  mylist[[n]] &lt;- c(n, dist[[2]] / 1000, dist[[1]] / 60)
+}
+results &lt;- as.data.frame(do.call(rbind, mylist))</code></pre>
+<p>Now let’s get rid of the irrelevant columns</p>
+<pre class="r"><code>row.names(results) &lt;- NULL
+# rename the the columns
+names(results)[1] &lt;- &quot;name&quot;
+names(results)[2] &lt;- &quot;distance&quot;
+names(results)[3] &lt;- &quot;minutes&quot;
+# change the class of distance and time variables to numeric
+results$name &lt;- as.character(results$name)
+results$distance &lt;- as.numeric(as.character(results$distance))
+results$minutes &lt;- as.numeric(as.character(results$minutes))
+# convert distances to kms
+results$distance &lt;- results$distance</code></pre>
+<p>Now we add the coordinates by merging the two tables <code>loc3</code> and <code>result1</code>.</p>
+<pre class="r"><code>results$lat &lt;- as.numeric(loc2$lat)
+results$lng &lt;- as.numeric(loc2$lng)
+time_df &lt;- results</code></pre>
+<p>It seems like there is a false value in the cycling distance to <em>La Maltourn?e</em> row #7 (?a a mal tourn? :D), and that can happen when 2 different locations have the same name. So here, I suggest to order the returned cycling distances and compare them with the euclidean distances or you can plot the cycling and the euclidean distances to see potential errors then you can remove or correct them. For this example we are going to remove the row number 7.</p>
+<pre class="r"><code>time_df &lt;- time_df[c(-7,-4),]</code></pre>
+</div>
+<div id="visualize-the-locations-using-leaflet-and-shiny" class="section level3">
+<h3>3. Visualize the locations using leaflet and shiny:</h3>
+<p>Shiny applications need 2 components the user interface <code>ui.R</code> and server side <code>server.R</code></p>
+<pre class="r"><code>#load the two libraries
+library(shiny)
+library(leaflet)
+ 
+ui &lt;- bootstrapPage(
+  tags$style(type = &quot;text/css&quot;, &quot;html, body {width:100%;height:100%}&quot;),
+  leafletOutput(&quot;mymap&quot;, width = &quot;100%&quot;, height = &quot;100%&quot;), # here we show the map in 100% of the page
+  # here we add a slider to the map in order to select different cycling times
+  absolutePanel(
+    top = -60, left = 150,
+    sliderInput(&quot;min&quot;, h2(&quot;Select time&quot;), 5, 30,
+      value = 30, step = 2
+    )
+  )
+)
+#----------------------------server side -------------------------------
+server &lt;- function(input, output) {
+  # Filter data based on selections from the slider
+  output$mymap &lt;- renderLeaflet({
+    sub_data &lt;- time_df[time_df$minutes &lt;= input$min, ]
+    # palette color of the displayed points
+    pal &lt;- colorNumeric(
+      palette = colorRamps::matlab.like2(5),
+      domain = sub_data$minutes
+    )
+    leaflet(sub_data) %&gt;%
+      # Base map, here I choose the dark map from Carto
+      addTiles(
+        urlTemplate = &quot;http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png&quot;,
+        attribution = &#39;&amp;copy;&lt;ahref=&quot;http://www.openstreetmap.org/copyright&quot;&gt;OpenStreetMap&lt;/a&gt;&amp;co                               py; &lt;ahref=&quot;http://cartodb.com/attributions&quot;&gt;CartoDB&lt;/a&gt;&#39;,
+        layerId = NULL, group = NULL, options = tileOptions()
+      ) %&gt;%
+      # The markers for localities
+      addCircleMarkers(~ lng, ~ lat,
+        stroke = T, radius = 2,
+        opacity = 1, fill = TRUE,
+        color = pal(sub_data$minutes),
+        fillColor = pal(sub_data$minutes),
+        popup = ~ as.character(sub_data$minutes)
+      ) %&gt;%
+
+      # The marker for the home coordinates
+      addMarkers(2.508224, 48.828583) %&gt;%
+      # We also add a legend to help visualize time
+      addLegend(
+        pal = pal, values = ~ minutes, opacity = 2,
+        title = &quot;Time (minutes)&quot;, position = &quot;topleft&quot;
+      )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</div>
+<div id="example-with-hundreds-of-lacations" class="section level3">
+<h3>4. Example with hundreds of lacations:</h3>
+<p>So this is just an example of 10 localities to illustrate what I did, if you want to see how does it look with hundreds of location <a href="https://a-khouakhi.shinyapps.io/cycling/">here is the link to the shiny app</a>.</p>
+</div>
+
+    </div>
+
+    
+
+
+<div class="article-tags">
+  
+  <a class="badge badge-light" href="/tags/ggplot/">ggplot</a>
+  
+  <a class="badge badge-light" href="/tags/r/">R</a>
+  
+  <a class="badge badge-light" href="/tags/shiny/">shiny</a>
+  
+</div>
+
+
+
+    
+
+
+
+
+
+
+<div class="media author-card" itemscope itemtype="http://schema.org/Person">
+  
+  <img class="portrait mr-3" src="/img/portrait.jpg" itemprop="image" alt="Avatar">
+  
+  <div class="media-body">
+    <h5 class="card-title" itemprop="name"><a href="/">Abdou Khouakhi</a></h5>
+    <h6 class="card-subtitle">Research associate</h6>
+    
+    <ul class="network-icon" aria-hidden="true">
+      
+      
+      
+      
+        
+      
+      
+      
+        
+      
+      <li>
+        <a itemprop="sameAs" href="/#contact" >
+          <i class="fas fa-envelope"></i>
+        </a>
+      </li>
+      
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a itemprop="sameAs" href="https://twitter.com/Abdou_KHOUAKHI" target="_blank" rel="noopener">
+          <i class="fab fa-twitter"></i>
+        </a>
+      </li>
+      
+      
+      
+      
+      
+      
+      <li>
+        <a itemprop="sameAs" href="https://scholar.google.co.uk/citations?user=T5qrg-cAAAAJ&amp;hl=en" target="_blank" rel="noopener">
+          <i class="ai ai-google-scholar"></i>
+        </a>
+      </li>
+      
+      
+      
+      
+        
+      
+      
+      
+      <li>
+        <a itemprop="sameAs" href="https://github.com/khouakhi" target="_blank" rel="noopener">
+          <i class="fab fa-github"></i>
+        </a>
+      </li>
+      
+      
+      
+      
+      
+      
+        
+      
+      <li>
+        <a itemprop="sameAs" href="/files/Abdou_khouakhi_CV.pdf" >
+          <i class="ai ai-cv"></i>
+        </a>
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+
+
+
+    
+    
+
+    
+
+    
+<section id="comments">
+  <div id="disqus_thread"></div>
+<script type="application/javascript">
+    var disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "disqus_abk" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</section>
+
+
+
+  </div>
+</article>
+
+<div class="container">
+  <footer class="site-footer">
+  
+  <p class="powered-by">
+    <a href="/privacy/">Privacy Policy</a>
+  </p>
+  
+
+  <p class="powered-by">
+    &copy; 2018 &middot; 
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+    <span class="float-right" aria-hidden="true">
+      <a href="#" id="back_to_top">
+        <span class="button_icon">
+          <i class="fas fa-chevron-up fa-2x"></i>
+        </span>
+      </a>
+    </span>
+    
+  </p>
+</footer>
+
+</div>
+
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.3/imagesloaded.pkgd.min.js" integrity="sha512-umsR78NN0D23AzgoZ11K7raBD+R6hqKojyBZs1w8WvYlsI+QuKRGBx3LFCwhatzBunCjDuJpDHwxD13sLMbpRA==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha256-VsEqElsCHSGmnmHXGQzvoWjWwoznFSZc6hs7ARLRacQ=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.4/isotope.pkgd.min.js" integrity="sha512-VDBOIlDbuC4VWxGJNmuFRQ0Li0SKkDpmGyuhAG5LTDLd/dJ/S0WMVxriR2Y+CyPL5gzjpN4f/6iqWVBJlht0tQ==" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+        
+      
+
+      
+      
+    
+
+    <script src="/js/hugo-academic.js"></script>
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    
+    <script id="dsq-count-scr" src="//disqus_abk.disqus.com/count.js" async></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    <script>
+      const search_index_filename = "/index.json";
+      const i18n = {
+        'placeholder': "Search...",
+        'results': "Search Results",
+        'no_results': "No results found"
+      };
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    <script src="/js/search.js"></script>
+    
+
+    
+    
+
+  </body>
+</html>
+

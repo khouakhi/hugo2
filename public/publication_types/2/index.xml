@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>2 on A.Khouakhi</title>
+    <link>/publication_types/2/</link>
+    <description>Recent content in 2 on A.Khouakhi</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>&amp;copy; 2018</copyright>
+    <lastBuildDate>Sun, 01 Jan 2017 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/publication_types/2/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Contribution of Tropical Cyclones to Rainfall at the Global Scale</title>
+      <link>/publication/tcs_rainfall/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/publication/tcs_rainfall/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>On the relationship between atmospheric rivers and high sea water levels along the U.S. West Coast</title>
+      <link>/publication/ar_paper/</link>
+      <pubDate>Mon, 01 Aug 2016 00:00:00 +0100</pubDate>
+      
+      <guid>/publication/ar_paper/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Attribution of annual maximum sea levels to tropical cyclones at the global scale</title>
+      <link>/publication/sl_tc/</link>
+      <pubDate>Mon, 01 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>/publication/sl_tc/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
