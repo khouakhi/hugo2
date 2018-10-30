@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 config.toml
+web_page.Rproj
+content/
+resources/
