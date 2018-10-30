@@ -25,7 +25,7 @@ weight = 5
 # List your qualifications (such as academic degrees).
 [[education.courses]]
   course = "PhD in Coastal environment; Coastal vulnerability to storm surge and sea level rise"
-  institution = "Faculty of Sicnce Rabat"
+  institution = "Faculty of Sicnces Rabat"
   year = 2013
 
 [[education.courses]]
