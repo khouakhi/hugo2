@@ -1,0 +1,163 @@
+---
+title: Cycling time
+author: Ab
+date: '2016-11-29'
+categories: []
+tags: ['ggplot','R','shiny']
+output:
+  html_document
+---
+
+![](/img/racing.jpg)
+
+My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R.
+So here is the breakdown of what I did:  
+
+### 1. Finding the different localities in a radius of 100Km from Bryan's home: 
+
+For this, I used the package `geonames` which is an interface to the GeoNames global geographical database. To be able to use the library functions you need a username by creating an account using [Geonames website](http://www.geonames.org/).  
+I use the `GNfindNearbyPlaceName` function that take 5 arguments `lat`, `lng`, `radius`, `search`, 
+and `maxRows`. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)        	
+
+```{r,warning=FALSE,message=FALSE}
+# load the package
+library(geonames)
+# set your geonames username
+options(geonamesUsername = "khouakhi")
+# In this example
+loc1 <- GNfindNearbyPlaceName(48.828583, 2.508224,
+  radius = "100",
+  maxRows = "10", style = "MEDIUM"
+)
+head(loc1, n = 3)                            
+```
+
+Basically all that we need from this data frame is the longitude, latitude and locality names. The function returns also the euclidean distance between two locations so let's keep the distance column as well. 
+
+```{r}
+loc2 <- loc1[c("name", "lng", "lat", "distance")]
+head(loc2)
+# transform the longitude and latitude from character to numeric
+loc2[c(2, 3, 4)] <- lapply(loc2[c(2, 3, 4)], as.numeric)
+sapply(loc2, class)
+```
+
+### 2. Finding the cyling distance and time: 
+
+Now that we got the localities, we will use the `ggmap` package to access distances from the Google Maps API, specifically we are going to use the `mapdist` function that returns distances in Km and miles but also time in hours and minutes.
+
+```{r, eval=F, echo=T}
+library(gmapsdistance)
+library(stringr)
+# First let's add the word "France" the localitie names
+loc2$name <- paste0(loc2$name, "+", "France")
+# add (+) in white spaces to allow google to serach for the localities
+loc2$name <- str_replace_all(loc2$name, pattern = " ", repl = "+")
+# create a loop to calculate cycling distance and time from the home location to every town.
+mylist <- list()
+home_adress <- "101+Quai+Louis+Ferber+94360+Bry-sur-Marne+France"
+for (n in loc2$name) {
+  dist <- gmapsdistance(
+    origin = home_adress, destination = n,
+    mode = "bicycling", key = "your key"
+  )
+
+  mylist[[n]] <- c(n, dist[[2]] / 1000, dist[[1]] / 60)
+}
+results <- as.data.frame(do.call(rbind, mylist))
+```
+
+Now let's get rid of the irrelevant columns 
+
+
+```{r, eval=F, echo=T}
+row.names(results) <- NULL
+# rename the the columns
+names(results)[1] <- "name"
+names(results)[2] <- "distance"
+names(results)[3] <- "minutes"
+# change the class of distance and time variables to numeric
+results$name <- as.character(results$name)
+results$distance <- as.numeric(as.character(results$distance))
+results$minutes <- as.numeric(as.character(results$minutes))
+# convert distances to kms
+results$distance <- results$distance
+```
+
+Now we add the coordinates by merging the two tables `loc3` and `result1`.
+```{r, eval=F, echo=T}
+results$lat <- as.numeric(loc2$lat)
+results$lng <- as.numeric(loc2$lng)
+time_df <- results
+```
+
+It seems like there is a false value in the cycling distance to _La Maltourn?e_ row #7 (?a a mal tourn? :D), and that can happen when 2 different locations have the same name. So here, I suggest to order the returned cycling distances and compare them with the euclidean distances or you can plot the cycling and the euclidean distances to see potential errors then you can remove or correct them. For this example we are going to remove the row number 7.  
+
+```{r, eval=F, echo=T}
+time_df <- time_df[c(-7,-4),]
+```
+
+### 3. Visualize the locations using leaflet and shiny: 
+
+Shiny applications need 2 components the user interface `ui.R` and server side `server.R`
+
+```{r, eval=F, echo=T}
+#load the two libraries
+library(shiny)
+library(leaflet)
+ 
+ui <- bootstrapPage(
+  tags$style(type = "text/css", "html, body {width:100%;height:100%}"),
+  leafletOutput("mymap", width = "100%", height = "100%"), # here we show the map in 100% of the page
+  # here we add a slider to the map in order to select different cycling times
+  absolutePanel(
+    top = -60, left = 150,
+    sliderInput("min", h2("Select time"), 5, 30,
+      value = 30, step = 2
+    )
+  )
+)
+#----------------------------server side -------------------------------
+server <- function(input, output) {
+  # Filter data based on selections from the slider
+  output$mymap <- renderLeaflet({
+    sub_data <- time_df[time_df$minutes <= input$min, ]
+    # palette color of the displayed points
+    pal <- colorNumeric(
+      palette = colorRamps::matlab.like2(5),
+      domain = sub_data$minutes
+    )
+    leaflet(sub_data) %>%
+      # Base map, here I choose the dark map from Carto
+      addTiles(
+        urlTemplate = "http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png",
+        attribution = '&copy;<ahref="http://www.openstreetmap.org/copyright">OpenStreetMap</a>&co                               py; <ahref="http://cartodb.com/attributions">CartoDB</a>',
+        layerId = NULL, group = NULL, options = tileOptions()
+      ) %>%
+      # The markers for localities
+      addCircleMarkers(~ lng, ~ lat,
+        stroke = T, radius = 2,
+        opacity = 1, fill = TRUE,
+        color = pal(sub_data$minutes),
+        fillColor = pal(sub_data$minutes),
+        popup = ~ as.character(sub_data$minutes)
+      ) %>%
+
+      # The marker for the home coordinates
+      addMarkers(2.508224, 48.828583) %>%
+      # We also add a legend to help visualize time
+      addLegend(
+        pal = pal, values = ~ minutes, opacity = 2,
+        title = "Time (minutes)", position = "topleft"
+      )
+  })
+}
+
+shinyApp(ui, server)
+```
+
+
+### 4. Example with hundreds of lacations: 
+
+So this is just an example of 10 localities to illustrate what I did, if you want to see how does it look with hundreds of location [here is the link to the shiny app](https://a-khouakhi.shinyapps.io/cycling/).
+

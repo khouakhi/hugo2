@@ -1,0 +1,167 @@
+---
+title: Cycling time
+author: Ab
+date: '2016-11-29'
+categories: []
+tags: ['ggplot','R','shiny']
+output:
+  html_document
+---
+
+
+
+<div class="figure">
+<img src="/img/racing.jpg" />
+
+</div>
+<p>My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R. So here is the breakdown of what I did:</p>
+<div id="finding-the-different-localities-in-a-radius-of-100km-from-bryans-home" class="section level3">
+<h3>1. Finding the different localities in a radius of 100Km from Bryan’s home:</h3>
+<p>For this, I used the package <code>geonames</code> which is an interface to the GeoNames global geographical database. To be able to use the library functions you need a username by creating an account using <a href="http://www.geonames.org/">Geonames website</a>.<br />
+I use the <code>GNfindNearbyPlaceName</code> function that take 5 arguments <code>lat</code>, <code>lng</code>, <code>radius</code>, <code>search</code>, and <code>maxRows</code>. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)</p>
+<pre class="r"><code># load the package
+library(geonames)
+# set your geonames username
+options(geonamesUsername = &quot;khouakhi&quot;)
+# In this example
+loc1 &lt;- GNfindNearbyPlaceName(48.828583, 2.508224,
+  radius = &quot;100&quot;,
+  maxRows = &quot;10&quot;, style = &quot;MEDIUM&quot;
+)
+head(loc1, n = 3)                            </code></pre>
+<pre><code>##   adminCode1     lng distance geonameId         toponymName countryId fcl
+## 1         11 2.52488  1.61759   3029706       Bry-sur-Marne   3017382   P
+## 2         11 2.49366   1.7245   3027105 Champigny-sur-Marne   3017382   P
+## 3         11 2.48333  1.90227   2990265    Nogent-sur-Marne   3017382   P
+##   population countryCode                name           fclName
+## 1      16226          FR       Bry-sur-Marne city, village,...
+## 2      76726          FR Champigny-sur-Marne city, village,...
+## 3      31236          FR    Nogent-sur-Marne city, village,...
+##   adminCodes1.ISO3166_2 countryName
+## 1                   IDF      France
+## 2                   IDF      France
+## 3                   IDF      France
+##                                       fcodeName    adminName1      lat
+## 1                               populated place Île-de-France 48.83811
+## 2                               populated place Île-de-France 48.81642
+## 3 seat of a third-order administrative division Île-de-France 48.83333
+##   fcode
+## 1   PPL
+## 2   PPL
+## 3 PPLA3</code></pre>
+<p>Basically all that we need from this data frame is the longitude, latitude and locality names. The function returns also the euclidean distance between two locations so let’s keep the distance column as well.</p>
+<pre class="r"><code>loc2 &lt;- loc1[c(&quot;name&quot;, &quot;lng&quot;, &quot;lat&quot;, &quot;distance&quot;)]
+head(loc2)</code></pre>
+<pre><code>##                   name     lng      lat distance
+## 1        Bry-sur-Marne 2.52488 48.83811  1.61759
+## 2  Champigny-sur-Marne 2.49366 48.81642   1.7245
+## 3     Nogent-sur-Marne 2.48333 48.83333  1.90227
+## 4           Champignol  2.5056 48.80865  2.22481
+## 5 Le Perreux-sur-Marne     2.5    48.85  2.45703
+## 6    Joinville-le-Pont 2.47458 48.82538  2.49615</code></pre>
+<pre class="r"><code># transform the longitude and latitude from character to numeric
+loc2[c(2, 3, 4)] &lt;- lapply(loc2[c(2, 3, 4)], as.numeric)
+sapply(loc2, class)</code></pre>
+<pre><code>##        name         lng         lat    distance 
+## &quot;character&quot;   &quot;numeric&quot;   &quot;numeric&quot;   &quot;numeric&quot;</code></pre>
+</div>
+<div id="finding-the-cyling-distance-and-time" class="section level3">
+<h3>2. Finding the cyling distance and time:</h3>
+<p>Now that we got the localities, we will use the <code>ggmap</code> package to access distances from the Google Maps API, specifically we are going to use the <code>mapdist</code> function that returns distances in Km and miles but also time in hours and minutes.</p>
+<pre class="r"><code>library(gmapsdistance)
+library(stringr)
+# First let&#39;s add the word &quot;France&quot; the localitie names
+loc2$name &lt;- paste0(loc2$name, &quot;+&quot;, &quot;France&quot;)
+# add (+) in white spaces to allow google to serach for the localities
+loc2$name &lt;- str_replace_all(loc2$name, pattern = &quot; &quot;, repl = &quot;+&quot;)
+# create a loop to calculate cycling distance and time from the home location to every town.
+mylist &lt;- list()
+home_adress &lt;- &quot;101+Quai+Louis+Ferber+94360+Bry-sur-Marne+France&quot;
+for (n in loc2$name) {
+  dist &lt;- gmapsdistance(
+    origin = home_adress, destination = n,
+    mode = &quot;bicycling&quot;, key = &quot;your key&quot;
+  )
+
+  mylist[[n]] &lt;- c(n, dist[[2]] / 1000, dist[[1]] / 60)
+}
+results &lt;- as.data.frame(do.call(rbind, mylist))</code></pre>
+<p>Now let’s get rid of the irrelevant columns</p>
+<pre class="r"><code>row.names(results) &lt;- NULL
+# rename the the columns
+names(results)[1] &lt;- &quot;name&quot;
+names(results)[2] &lt;- &quot;distance&quot;
+names(results)[3] &lt;- &quot;minutes&quot;
+# change the class of distance and time variables to numeric
+results$name &lt;- as.character(results$name)
+results$distance &lt;- as.numeric(as.character(results$distance))
+results$minutes &lt;- as.numeric(as.character(results$minutes))
+# convert distances to kms
+results$distance &lt;- results$distance</code></pre>
+<p>Now we add the coordinates by merging the two tables <code>loc3</code> and <code>result1</code>.</p>
+<pre class="r"><code>results$lat &lt;- as.numeric(loc2$lat)
+results$lng &lt;- as.numeric(loc2$lng)
+time_df &lt;- results</code></pre>
+<p>It seems like there is a false value in the cycling distance to <em>La Maltourn?e</em> row #7 (?a a mal tourn? :D), and that can happen when 2 different locations have the same name. So here, I suggest to order the returned cycling distances and compare them with the euclidean distances or you can plot the cycling and the euclidean distances to see potential errors then you can remove or correct them. For this example we are going to remove the row number 7.</p>
+<pre class="r"><code>time_df &lt;- time_df[c(-7,-4),]</code></pre>
+</div>
+<div id="visualize-the-locations-using-leaflet-and-shiny" class="section level3">
+<h3>3. Visualize the locations using leaflet and shiny:</h3>
+<p>Shiny applications need 2 components the user interface <code>ui.R</code> and server side <code>server.R</code></p>
+<pre class="r"><code>#load the two libraries
+library(shiny)
+library(leaflet)
+ 
+ui &lt;- bootstrapPage(
+  tags$style(type = &quot;text/css&quot;, &quot;html, body {width:100%;height:100%}&quot;),
+  leafletOutput(&quot;mymap&quot;, width = &quot;100%&quot;, height = &quot;100%&quot;), # here we show the map in 100% of the page
+  # here we add a slider to the map in order to select different cycling times
+  absolutePanel(
+    top = -60, left = 150,
+    sliderInput(&quot;min&quot;, h2(&quot;Select time&quot;), 5, 30,
+      value = 30, step = 2
+    )
+  )
+)
+#----------------------------server side -------------------------------
+server &lt;- function(input, output) {
+  # Filter data based on selections from the slider
+  output$mymap &lt;- renderLeaflet({
+    sub_data &lt;- time_df[time_df$minutes &lt;= input$min, ]
+    # palette color of the displayed points
+    pal &lt;- colorNumeric(
+      palette = colorRamps::matlab.like2(5),
+      domain = sub_data$minutes
+    )
+    leaflet(sub_data) %&gt;%
+      # Base map, here I choose the dark map from Carto
+      addTiles(
+        urlTemplate = &quot;http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png&quot;,
+        attribution = &#39;&amp;copy;&lt;ahref=&quot;http://www.openstreetmap.org/copyright&quot;&gt;OpenStreetMap&lt;/a&gt;&amp;co                               py; &lt;ahref=&quot;http://cartodb.com/attributions&quot;&gt;CartoDB&lt;/a&gt;&#39;,
+        layerId = NULL, group = NULL, options = tileOptions()
+      ) %&gt;%
+      # The markers for localities
+      addCircleMarkers(~ lng, ~ lat,
+        stroke = T, radius = 2,
+        opacity = 1, fill = TRUE,
+        color = pal(sub_data$minutes),
+        fillColor = pal(sub_data$minutes),
+        popup = ~ as.character(sub_data$minutes)
+      ) %&gt;%
+
+      # The marker for the home coordinates
+      addMarkers(2.508224, 48.828583) %&gt;%
+      # We also add a legend to help visualize time
+      addLegend(
+        pal = pal, values = ~ minutes, opacity = 2,
+        title = &quot;Time (minutes)&quot;, position = &quot;topleft&quot;
+      )
+  })
+}
+
+shinyApp(ui, server)</code></pre>
+</div>
+<div id="example-with-hundreds-of-lacations" class="section level3">
+<h3>4. Example with hundreds of lacations:</h3>
+<p>So this is just an example of 10 localities to illustrate what I did, if you want to see how does it look with hundreds of location <a href="https://a-khouakhi.shinyapps.io/cycling/">here is the link to the shiny app</a>.</p>
+</div>
