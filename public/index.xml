@@ -31,16 +31,6 @@
     </item>
     
     <item>
-      <title>Privacy Policy</title>
-      <link>/privacy/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      
-      <guid>/privacy/</guid>
-      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Sea level anomalies</title>
       <link>/post/sl_anomalies/article2/</link>
       <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
@@ -57,16 +47,17 @@
 &lt;script src=&#34;/rmarkdown-libs/leaflet-binding/leaflet.js&#34;&gt;&lt;/script&gt;
 
 
-&lt;p&gt;&lt;img src=&#34;/img/sat_alt.png&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level.
-Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean. The data are processed from all altimeter missions: Jason-3, Sentinel-3A, HY-2A, Saral/AltiKa, Cryosat-2, Jason-2, Jason-1, T/P, ENVISAT, GFO, ERS1/2. The data was previously distributed by Aviso+ and now it’s made available through the Copernicus Marine Service Information &lt;a href=&#34;http://marine.copernicus.eu/&#34;&gt;here is the link&lt;/a&gt;.&lt;/p&gt;
+&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/sat_alt.png&#34; /&gt;
+
+&lt;/div&gt;
+&lt;p&gt;Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level. Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean. The data are processed from all altimeter missions: Jason-3, Sentinel-3A, HY-2A, Saral/AltiKa, Cryosat-2, Jason-2, Jason-1, T/P, ENVISAT, GFO, ERS1/2. The data was previously distributed by Aviso+ and now it’s made available through the Copernicus Marine Service Information &lt;a href=&#34;http://marine.copernicus.eu/&#34;&gt;here is the link&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In this post, I briefly show how to download, visualise and convert/export time series for further analyses using R.&lt;/p&gt;
 &lt;div id=&#34;data-download&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Data download&lt;/h4&gt;
 &lt;p&gt;There are at least 2 ways to download the data depending on the amount of data you are interested in (geographical and temporal scales).&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Using the Copernicus Marine Service &lt;a href=&#34;http://marine.copernicus.eu/&#34;&gt;website&lt;/a&gt;, click on Products and select Sea surface Hight from the parameter Tab (left) then scroll down to the global ocean SSH. From the new opened page, click on Download product (here you will need to create an account and log in to access the download page).
-From the download page, select the geographical area, the time range and the parameters you are interested in and click data access. However, you are only allowed to download up to 1GB of data at the same time.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Using the Copernicus Marine Service &lt;a href=&#34;http://marine.copernicus.eu/&#34;&gt;website&lt;/a&gt;, click on Products and select Sea surface Hight from the parameter Tab (left) then scroll down to the global ocean SSH. From the new opened page, click on Download product (here you will need to create an account and log in to access the download page). From the download page, select the geographical area, the time range and the parameters you are interested in and click data access. However, you are only allowed to download up to 1GB of data at the same time.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Alternatively, if you are interested in downloading the entire records, you can access the files from ftp, here is a code to automate the downloading of the entire data-sets globally from 1993 - to present (it takes time but it does the job!)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The daily SSH data is organised in an ftp folder for each year starting from 1993 to 2017. So I use &lt;code&gt;download.file&lt;/code&gt; function from &lt;code&gt;RCurl&lt;/code&gt;in a for loop.&lt;/p&gt;
@@ -317,14 +308,15 @@ ggplot() +
       <pubDate>Tue, 29 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>/post/cycline_dist/cyc_mrcd/</guid>
-      <description>&lt;p&gt;&lt;img src=&#34;/img/racing.jpg&#34; /&gt;&lt;/p&gt;
-&lt;p&gt;My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R.
-So here is the breakdown of what I did:&lt;/p&gt;
+      <description>&lt;div class=&#34;figure&#34;&gt;
+&lt;img src=&#34;/img/racing.jpg&#34; /&gt;
+
+&lt;/div&gt;
+&lt;p&gt;My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R. So here is the breakdown of what I did:&lt;/p&gt;
 &lt;div id=&#34;finding-the-different-localities-in-a-radius-of-100km-from-bryans-home&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;1. Finding the different localities in a radius of 100Km from Bryan’s home:&lt;/h3&gt;
 &lt;p&gt;For this, I used the package &lt;code&gt;geonames&lt;/code&gt; which is an interface to the GeoNames global geographical database. To be able to use the library functions you need a username by creating an account using &lt;a href=&#34;http://www.geonames.org/&#34;&gt;Geonames website&lt;/a&gt;.&lt;br /&gt;
-I use the &lt;code&gt;GNfindNearbyPlaceName&lt;/code&gt; function that take 5 arguments &lt;code&gt;lat&lt;/code&gt;, &lt;code&gt;lng&lt;/code&gt;, &lt;code&gt;radius&lt;/code&gt;, &lt;code&gt;search&lt;/code&gt;,
-and &lt;code&gt;maxRows&lt;/code&gt;. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)&lt;/p&gt;
+I use the &lt;code&gt;GNfindNearbyPlaceName&lt;/code&gt; function that take 5 arguments &lt;code&gt;lat&lt;/code&gt;, &lt;code&gt;lng&lt;/code&gt;, &lt;code&gt;radius&lt;/code&gt;, &lt;code&gt;search&lt;/code&gt;, and &lt;code&gt;maxRows&lt;/code&gt;. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# load the package
 library(geonames)
 # set your geonames username

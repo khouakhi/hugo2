@@ -77,6 +77,20 @@
 
   
   
+    <script>
+      window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+      ga('create', 'UA-128384194-1', 'auto');
+      
+      ga('require', 'eventTracker');
+      ga('require', 'outboundLinkTracker');
+      ga('require', 'urlChangeTracker');
+      ga('send', 'pageview');
+    </script>
+    <script async src="//www.google-analytics.com/analytics.js"></script>
+    
+    <script async src="https://cdnjs.cloudflare.com/ajax/libs/autotrack/2.4.1/autotrack.js" integrity="sha512-HUmooslVKj4m6OBu0OgzjXXr+QuFYy/k7eLI5jdeEy/F4RSgMn6XRWRGkFi5IFaFgy7uFTkegp3Z0XnJf3Jq+g==" crossorigin="anonymous"></script>
+    
+  
   
 
   
@@ -363,14 +377,15 @@
   <div class="article-container">
 
     <div class="article-style" itemprop="articleBody">
-      <p><img src="/img/racing.jpg" /></p>
-<p>My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R.
-So here is the breakdown of what I did:</p>
+      <div class="figure">
+<img src="/img/racing.jpg" />
+
+</div>
+<p>My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R. So here is the breakdown of what I did:</p>
 <div id="finding-the-different-localities-in-a-radius-of-100km-from-bryans-home" class="section level3">
 <h3>1. Finding the different localities in a radius of 100Km from Bryan’s home:</h3>
 <p>For this, I used the package <code>geonames</code> which is an interface to the GeoNames global geographical database. To be able to use the library functions you need a username by creating an account using <a href="http://www.geonames.org/">Geonames website</a>.<br />
-I use the <code>GNfindNearbyPlaceName</code> function that take 5 arguments <code>lat</code>, <code>lng</code>, <code>radius</code>, <code>search</code>,
-and <code>maxRows</code>. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)</p>
+I use the <code>GNfindNearbyPlaceName</code> function that take 5 arguments <code>lat</code>, <code>lng</code>, <code>radius</code>, <code>search</code>, and <code>maxRows</code>. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)</p>
 <pre class="r"><code># load the package
 library(geonames)
 # set your geonames username
@@ -660,10 +675,6 @@ shinyApp(ui, server)</code></pre>
 
 <div class="container">
   <footer class="site-footer">
-  
-  <p class="powered-by">
-    <a href="/privacy/">Privacy Policy</a>
-  </p>
   
 
   <p class="powered-by">
