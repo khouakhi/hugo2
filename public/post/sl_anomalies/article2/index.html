@@ -15,7 +15,7 @@
   
     
   
-  <meta name="description" content="Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level. Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean.">
+  <meta name="description" content="Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level.Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean.">
 
   
   <link rel="alternate" hreflang="en-us" href="/post/sl_anomalies/article2/">
@@ -94,8 +94,8 @@
   
 
   
-  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="A.Khouakhi">
-  <link rel="feed" href="/index.xml" type="application/rss+xml" title="A.Khouakhi">
+  <link rel="alternate" href="/index.xml" type="application/rss+xml" title="aKhouakhi">
+  <link rel="feed" href="/index.xml" type="application/rss+xml" title="aKhouakhi">
   
 
   <link rel="manifest" href="/site.webmanifest">
@@ -106,10 +106,10 @@
 
   <meta property="twitter:card" content="summary_large_image">
   
-  <meta property="og:site_name" content="A.Khouakhi">
+  <meta property="og:site_name" content="aKhouakhi">
   <meta property="og:url" content="/post/sl_anomalies/article2/">
-  <meta property="og:title" content="Sea level anomalies | A.Khouakhi">
-  <meta property="og:description" content="Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level. Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean.">
+  <meta property="og:title" content="Sea level anomalies | aKhouakhi">
+  <meta property="og:description" content="Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level.Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean.">
   
   
     
@@ -125,7 +125,7 @@
 
   
 
-  <title>Sea level anomalies | A.Khouakhi</title>
+  <title>Sea level anomalies | aKhouakhi</title>
 
 </head>
 <body id="top" data-spy="scroll" data-target="#TableOfContents" data-offset="71" >
@@ -134,7 +134,7 @@
   <div class="container">
 
     
-      <a class="navbar-brand" href="/">A.Khouakhi</a>
+      <a class="navbar-brand" href="/">aKhouakhi</a>
       
       <button type="button" class="navbar-toggler" data-toggle="collapse"
               data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -235,7 +235,7 @@
         
 
         <li class="nav-item">
-          <a class="nav-link" href="/files/Abdou_khouakhi_CV.pdf">
+          <a class="nav-link" href="/files/cv.pdf">
             
             <span>CV</span>
             
@@ -388,17 +388,16 @@
 <script src="/rmarkdown-libs/leaflet-binding/leaflet.js"></script>
 
 
-<div class="figure">
-<img src="/img/sat_alt.png" />
-
-</div>
-<p>Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level. Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean. The data are processed from all altimeter missions: Jason-3, Sentinel-3A, HY-2A, Saral/AltiKa, Cryosat-2, Jason-2, Jason-1, T/P, ENVISAT, GFO, ERS1/2. The data was previously distributed by Aviso+ and now it’s made available through the Copernicus Marine Service Information <a href="http://marine.copernicus.eu/">here is the link</a>.</p>
+<p><img src="/img/sat_alt.png" /></p>
+<p>Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level.
+Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean. The data are processed from all altimeter missions: Jason-3, Sentinel-3A, HY-2A, Saral/AltiKa, Cryosat-2, Jason-2, Jason-1, T/P, ENVISAT, GFO, ERS1/2. The data was previously distributed by Aviso+ and now it’s made available through the Copernicus Marine Service Information <a href="http://marine.copernicus.eu/">here is the link</a>.</p>
 <p>In this post, I briefly show how to download, visualise and convert/export time series for further analyses using R.</p>
 <div id="data-download" class="section level4">
 <h4>Data download</h4>
 <p>There are at least 2 ways to download the data depending on the amount of data you are interested in (geographical and temporal scales).</p>
 <ol style="list-style-type: decimal">
-<li><p>Using the Copernicus Marine Service <a href="http://marine.copernicus.eu/">website</a>, click on Products and select Sea surface Hight from the parameter Tab (left) then scroll down to the global ocean SSH. From the new opened page, click on Download product (here you will need to create an account and log in to access the download page). From the download page, select the geographical area, the time range and the parameters you are interested in and click data access. However, you are only allowed to download up to 1GB of data at the same time.</p></li>
+<li><p>Using the Copernicus Marine Service <a href="http://marine.copernicus.eu/">website</a>, click on Products and select Sea surface Hight from the parameter Tab (left) then scroll down to the global ocean SSH. From the new opened page, click on Download product (here you will need to create an account and log in to access the download page).
+From the download page, select the geographical area, the time range and the parameters you are interested in and click data access. However, you are only allowed to download up to 1GB of data at the same time.</p></li>
 <li><p>Alternatively, if you are interested in downloading the entire records, you can access the files from ftp, here is a code to automate the downloading of the entire data-sets globally from 1993 - to present (it takes time but it does the job!)</p></li>
 </ol>
 <p>The daily SSH data is organised in an ftp folder for each year starting from 1993 to 2017. So I use <code>download.file</code> function from <code>RCurl</code>in a for loop.</p>
@@ -558,8 +557,10 @@ dim(ssh_slice)</code></pre>
 image(lon, lat, ssh_slice, col = brewer.pal(10, &quot;RdBu&quot;))</code></pre>
 <p><img src="/post/sl_anomalies/article2_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code># Create a dataframe for this signle time step
-ssh_vec &lt;- data_frame(ssh = as.vector(ssh_slice))
-coord_df &lt;- expand.grid(lon = lon, lat = lat)
+ssh_vec &lt;- data_frame(ssh = as.vector(ssh_slice))</code></pre>
+<pre><code>## Warning: `data_frame()` is deprecated, use `tibble()`.
+## This warning is displayed once per session.</code></pre>
+<pre class="r"><code>coord_df &lt;- expand.grid(lon = lon, lat = lat)
 ssh_df &lt;- bind_cols(coord_df, ssh_vec)</code></pre>
 <p>We can put these last lines of code in a for loop to save each separate time step in a separate dataframe if needed.</p>
 <pre class="r"><code>slices &lt;- 1:ntime
@@ -702,7 +703,7 @@ ggplot() +
         
       
       <li>
-        <a itemprop="sameAs" href="/files/Abdou_khouakhi_CV.pdf" >
+        <a itemprop="sameAs" href="/files/cv.pdf" >
           <i class="ai ai-cv"></i>
         </a>
       </li>
@@ -760,10 +761,6 @@ ggplot() +
 
 <div class="container">
   <footer class="site-footer">
-  
-  <p class="powered-by">
-    <a href="/privacy/">Privacy Policy</a>
-  </p>
   
 
   <p class="powered-by">

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on A.Khouakhi</title>
+    <title>Posts on aKhouakhi</title>
     <link>/post/</link>
-    <description>Recent content in Posts on A.Khouakhi</description>
+    <description>Recent content in Posts on aKhouakhi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
@@ -18,7 +18,7 @@
       <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
       
       <guid>/post/sl_anomalies/article2/</guid>
-      <description>Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level. Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean.</description>
+      <description>Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level.Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean.</description>
     </item>
     
     <item>

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Publications on A.Khouakhi</title>
+    <title>Publications on aKhouakhi</title>
     <link>/publication/</link>
-    <description>Recent content in Publications on A.Khouakhi</description>
+    <description>Recent content in Publications on aKhouakhi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
@@ -11,6 +11,15 @@
     
 	<atom:link href="/publication/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Contribution of Tropical Cyclones to Rainfall at the Global Scale</title>
+      <link>/publication/r_hydro/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/publication/r_hydro/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Contribution of Tropical Cyclones to Rainfall at the Global Scale</title>

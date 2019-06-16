@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>A.Khouakhi on A.Khouakhi</title>
+    <title>aKhouakhi on aKhouakhi</title>
     <link>/</link>
-    <description>Recent content in A.Khouakhi on A.Khouakhi</description>
+    <description>Recent content in aKhouakhi on aKhouakhi</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <copyright>&amp;copy; 2018</copyright>
@@ -31,16 +31,6 @@
     </item>
     
     <item>
-      <title>Privacy Policy</title>
-      <link>/privacy/</link>
-      <pubDate>Thu, 28 Jun 2018 00:00:00 +0100</pubDate>
-      
-      <guid>/privacy/</guid>
-      <description>&lt;p&gt;&amp;hellip;&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Sea level anomalies</title>
       <link>/post/sl_anomalies/article2/</link>
       <pubDate>Thu, 28 Sep 2017 00:00:00 +0000</pubDate>
@@ -57,17 +47,16 @@
 &lt;script src=&#34;/rmarkdown-libs/leaflet-binding/leaflet.js&#34;&gt;&lt;/script&gt;
 
 
-&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/sat_alt.png&#34; /&gt;
-
-&lt;/div&gt;
-&lt;p&gt;Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level. Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean. The data are processed from all altimeter missions: Jason-3, Sentinel-3A, HY-2A, Saral/AltiKa, Cryosat-2, Jason-2, Jason-1, T/P, ENVISAT, GFO, ERS1/2. The data was previously distributed by Aviso+ and now it’s made available through the Copernicus Marine Service Information &lt;a href=&#34;http://marine.copernicus.eu/&#34;&gt;here is the link&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;/img/sat_alt.png&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;Global sea level is monitored through a network of tide gages distributed along different coastlines which provide relative sea level measurements and satellite observations that provide also valuable data of global sea level.
+Satellite measurements started in 1993 and different satellite have been monitoring the sea surface height (ssh). Among the products of these satellite measurements, there is the multimission altimeter satellite gridded ssh data and derived variables computed with respect to a twenty-year mean. The data are processed from all altimeter missions: Jason-3, Sentinel-3A, HY-2A, Saral/AltiKa, Cryosat-2, Jason-2, Jason-1, T/P, ENVISAT, GFO, ERS1/2. The data was previously distributed by Aviso+ and now it’s made available through the Copernicus Marine Service Information &lt;a href=&#34;http://marine.copernicus.eu/&#34;&gt;here is the link&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;In this post, I briefly show how to download, visualise and convert/export time series for further analyses using R.&lt;/p&gt;
 &lt;div id=&#34;data-download&#34; class=&#34;section level4&#34;&gt;
 &lt;h4&gt;Data download&lt;/h4&gt;
 &lt;p&gt;There are at least 2 ways to download the data depending on the amount of data you are interested in (geographical and temporal scales).&lt;/p&gt;
 &lt;ol style=&#34;list-style-type: decimal&#34;&gt;
-&lt;li&gt;&lt;p&gt;Using the Copernicus Marine Service &lt;a href=&#34;http://marine.copernicus.eu/&#34;&gt;website&lt;/a&gt;, click on Products and select Sea surface Hight from the parameter Tab (left) then scroll down to the global ocean SSH. From the new opened page, click on Download product (here you will need to create an account and log in to access the download page). From the download page, select the geographical area, the time range and the parameters you are interested in and click data access. However, you are only allowed to download up to 1GB of data at the same time.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Using the Copernicus Marine Service &lt;a href=&#34;http://marine.copernicus.eu/&#34;&gt;website&lt;/a&gt;, click on Products and select Sea surface Hight from the parameter Tab (left) then scroll down to the global ocean SSH. From the new opened page, click on Download product (here you will need to create an account and log in to access the download page).
+From the download page, select the geographical area, the time range and the parameters you are interested in and click data access. However, you are only allowed to download up to 1GB of data at the same time.&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Alternatively, if you are interested in downloading the entire records, you can access the files from ftp, here is a code to automate the downloading of the entire data-sets globally from 1993 - to present (it takes time but it does the job!)&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The daily SSH data is organised in an ftp folder for each year starting from 1993 to 2017. So I use &lt;code&gt;download.file&lt;/code&gt; function from &lt;code&gt;RCurl&lt;/code&gt;in a for loop.&lt;/p&gt;
@@ -227,8 +216,10 @@ dim(ssh_slice)&lt;/code&gt;&lt;/pre&gt;
 image(lon, lat, ssh_slice, col = brewer.pal(10, &amp;quot;RdBu&amp;quot;))&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;img src=&#34;/post/sl_anomalies/article2_files/figure-html/unnamed-chunk-3-1.png&#34; width=&#34;672&#34; /&gt;&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# Create a dataframe for this signle time step
-ssh_vec &amp;lt;- data_frame(ssh = as.vector(ssh_slice))
-coord_df &amp;lt;- expand.grid(lon = lon, lat = lat)
+ssh_vec &amp;lt;- data_frame(ssh = as.vector(ssh_slice))&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;## Warning: `data_frame()` is deprecated, use `tibble()`.
+## This warning is displayed once per session.&lt;/code&gt;&lt;/pre&gt;
+&lt;pre class=&#34;r&#34;&gt;&lt;code&gt;coord_df &amp;lt;- expand.grid(lon = lon, lat = lat)
 ssh_df &amp;lt;- bind_cols(coord_df, ssh_vec)&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We can put these last lines of code in a for loop to save each separate time step in a separate dataframe if needed.&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;slices &amp;lt;- 1:ntime
@@ -281,6 +272,15 @@ ggplot() +
     
     <item>
       <title>Contribution of Tropical Cyclones to Rainfall at the Global Scale</title>
+      <link>/publication/r_hydro/</link>
+      <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
+      
+      <guid>/publication/r_hydro/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Contribution of Tropical Cyclones to Rainfall at the Global Scale</title>
       <link>/publication/tcs_rainfall/</link>
       <pubDate>Sun, 01 Jan 2017 00:00:00 +0000</pubDate>
       
@@ -318,15 +318,14 @@ ggplot() +
       <pubDate>Tue, 29 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>/post/cycline_dist/cyc_mrcd/</guid>
-      <description>&lt;div class=&#34;figure&#34;&gt;
-&lt;img src=&#34;/img/racing.jpg&#34; /&gt;
-
-&lt;/div&gt;
-&lt;p&gt;My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R. So here is the breakdown of what I did:&lt;/p&gt;
+      <description>&lt;p&gt;&lt;img src=&#34;/img/racing.jpg&#34; /&gt;&lt;/p&gt;
+&lt;p&gt;My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R.
+So here is the breakdown of what I did:&lt;/p&gt;
 &lt;div id=&#34;finding-the-different-localities-in-a-radius-of-100km-from-bryans-home&#34; class=&#34;section level3&#34;&gt;
 &lt;h3&gt;1. Finding the different localities in a radius of 100Km from Bryan’s home:&lt;/h3&gt;
 &lt;p&gt;For this, I used the package &lt;code&gt;geonames&lt;/code&gt; which is an interface to the GeoNames global geographical database. To be able to use the library functions you need a username by creating an account using &lt;a href=&#34;http://www.geonames.org/&#34;&gt;Geonames website&lt;/a&gt;.&lt;br /&gt;
-I use the &lt;code&gt;GNfindNearbyPlaceName&lt;/code&gt; function that take 5 arguments &lt;code&gt;lat&lt;/code&gt;, &lt;code&gt;lng&lt;/code&gt;, &lt;code&gt;radius&lt;/code&gt;, &lt;code&gt;search&lt;/code&gt;, and &lt;code&gt;maxRows&lt;/code&gt;. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)&lt;/p&gt;
+I use the &lt;code&gt;GNfindNearbyPlaceName&lt;/code&gt; function that take 5 arguments &lt;code&gt;lat&lt;/code&gt;, &lt;code&gt;lng&lt;/code&gt;, &lt;code&gt;radius&lt;/code&gt;, &lt;code&gt;search&lt;/code&gt;,
+and &lt;code&gt;maxRows&lt;/code&gt;. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)&lt;/p&gt;
 &lt;pre class=&#34;r&#34;&gt;&lt;code&gt;# load the package
 library(geonames)
 # set your geonames username
@@ -340,7 +339,7 @@ head(loc1, n = 3)                            &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##   adminCode1     lng distance geonameId         toponymName countryId fcl
 ## 1         11 2.52488  1.61759   3029706       Bry-sur-Marne   3017382   P
 ## 2         11 2.49366   1.7245   3027105 Champigny-sur-Marne   3017382   P
-## 3         11 2.48333  1.90227   2990265    Nogent-sur-Marne   3017382   P
+## 3         11 2.48255  2.08969   2990265    Nogent-sur-Marne   3017382   P
 ##   population countryCode                name           fclName
 ## 1      16226          FR       Bry-sur-Marne city, village,...
 ## 2      76726          FR Champigny-sur-Marne city, village,...
@@ -352,7 +351,7 @@ head(loc1, n = 3)                            &lt;/code&gt;&lt;/pre&gt;
 ##                                       fcodeName    adminName1      lat
 ## 1                               populated place Île-de-France 48.83811
 ## 2                               populated place Île-de-France 48.81642
-## 3 seat of a third-order administrative division Île-de-France 48.83333
+## 3 seat of a third-order administrative division Île-de-France 48.83669
 ##   fcode
 ## 1   PPL
 ## 2   PPL
@@ -363,7 +362,7 @@ head(loc2)&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;##                   name     lng      lat distance
 ## 1        Bry-sur-Marne 2.52488 48.83811  1.61759
 ## 2  Champigny-sur-Marne 2.49366 48.81642   1.7245
-## 3     Nogent-sur-Marne 2.48333 48.83333  1.90227
+## 3     Nogent-sur-Marne 2.48255 48.83669  2.08969
 ## 4           Champignol  2.5056 48.80865  2.22481
 ## 5 Le Perreux-sur-Marne     2.5    48.85  2.45703
 ## 6    Joinville-le-Pont 2.47458 48.82538  2.49615&lt;/code&gt;&lt;/pre&gt;

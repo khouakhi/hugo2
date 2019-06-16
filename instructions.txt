@@ -1,0 +1,11 @@
+Hugo web page modification: 
+
+to modify a file (e.g add updated cv) 
+- copy the new cv in public/file (in the name of the file is nor the same, change it in confing.toml fiel)
+- to add new post: go to content/post, create the .rmd blog post and and use blogdown::build_site()
+
+ ***** CAUTION: the config.toml is included in git ignore so in order render the updated site in netlify, I need to remove the config file from the the ignore **** 
+
+
+the youtube explains how to create a Hugo web site from scrach. 
+1- https://www.youtube.com/watch?v=syWAKaj-4ck
