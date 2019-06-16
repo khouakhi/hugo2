@@ -5,5 +5,5 @@
 hugo.Rproj
 config.toml
 web_page.Rproj
-#content/
-#resources/
+content/
+resources/
