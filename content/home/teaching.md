@@ -16,8 +16,8 @@ weight = 60
 +++
 I have teaching experience in:
 
-- R in geosciences
+- R and Python for geosciences
 - Introduction to storm surges
-- Geospatial analyses in R
+- Geospatial analyses in R/Python
 
 
