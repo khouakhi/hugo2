@@ -2,7 +2,7 @@
 # About/Biography widget.
 widget = "about"
 active = true
-date = 2016-04-20T00:00:00
+date = 2017-04-20T00:00:00
 
 # Order that this section will appear in.
 weight = 5
@@ -17,19 +17,18 @@ weight = 5
     "Sea level and storm surges",
     "Tropical cyclones",
     "Atmospheric rivers",
-    "Data science and Big data",
-    "Coastal management",
-    "Communicating Science"
+    "Earth data science and Big data",
+    "Coastal management"
   ]
 
 # List your qualifications (such as academic degrees).
 [[education.courses]]
-  course = "PhD in Coastal environment; Coastal vulnerability to storm surge and sea level rise"
+  course = "PhD in Coastal hazards; Coastal vulnerability to storm surge and sea level rise"
   institution = "Faculty of Sicnces Rabat"
-  year = 2013
+  year = 2014
 
 [[education.courses]]
-  course = "MSc in Coastal risks"
+  course = "MSc in Coastal hazards (coastal flooding)"
   institution = "Faculty of Sciences, Rabat"
   year = 2008
 
@@ -42,7 +41,7 @@ weight = 5
 
 # Hello! 🙂
 
-My name is **Abdou khouakhi**, and my current research interests lie in climate and weather data analysis, extreme climate and weather events, flood risk, sea level, data visualisation, and geographic data science.
+My name is Abdou khouakhi, and my current research interests lie in climate and weather data analysis, extreme climate and weather events, flood risk, sea level, data visualisation, and geographic data science.
 
 I graduated with a PhD in coastal environments, vulnerability to sea level rise and storm surges from the Faculty of Sciences, Rabat (Morocco). I then moved to the United States for a Postdoc at IIHR-Hydroscience & Engineering, University of Iowa. There, I worked on a variety of projects related to climate and environmental data analysis (manipulation of large datasets using R and Python). Currently, I am a research associate at Loughborough University (UK), working on a project on developing models/systems to monitor flooding in real time using remote water sensing over cellular phone systems.
 
