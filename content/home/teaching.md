@@ -14,10 +14,11 @@ subtitle = ""
 weight = 60
 
 +++
-I have teaching experience in:
 
 - R and Python for geosciences
 - Introduction to storm surges
-- Geospatial analyses in R/Python
+- Geospatial analysis in R/Python
+- Remote sensing 
+- Catchement hydrology 
 
 

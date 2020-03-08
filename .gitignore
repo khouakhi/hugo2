@@ -1,0 +1,10 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+hugo.Rproj
+#config.toml
+web_page.Rproj
+instructions.txt
+#content/
+#resources/
