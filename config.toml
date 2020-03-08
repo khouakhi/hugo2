@@ -64,7 +64,7 @@ enableGitInfo = false
   # Details for the Contact Widget
   email = "a.khouakhi@Cranfield.ac.uk"
   address = "Cranfield University, Building 53, MK43 0AL, UK"
-  office_hours = "Monday - FRiday 9:00 to 18:00 or email for appointment"
+  office_hours = "Monday - Friday 9:00 to 18:00 or email for appointment"
   phone = "+44 (0) 1234 75 4487"
   skype = "abdou.khouakhi"
   telegram = ""

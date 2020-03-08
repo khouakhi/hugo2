@@ -40,7 +40,7 @@ weight = 5
 
 # Hello! 🙂
 
-My name is Abdou khouakhi, I am a Lecturer in Geospatial data science in the School of Water, Energy and Environment, Centre for the environment and Agricultural informatics.My research interests include extreme climate/weather events, flood risk, coastal hazards and geocomputation, remote sensing and applied machine learning.
+My name is Abdou khouakhi, I am a Lecturer in Geospatial data science in the School of Water, Energy and Environment, Centre for Environment and Agricultural Informatics.My research interests include extreme climate/weather events, flood risk, coastal hazards and geocomputation, remote sensing and applied machine learning.
 
 A bit about me...
 
