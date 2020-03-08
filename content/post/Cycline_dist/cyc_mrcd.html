@@ -10,15 +10,14 @@ output:
 
 
 
-<div class="figure">
-<img src="/img/racing.jpg" />
-
-</div>
-<p>My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R. So here is the breakdown of what I did:</p>
+<p><img src="/img/racing.jpg" /></p>
+<p>My father in law is a cyclist and he usually cycle from his home located in Bry-sur-marne in Paris to the surrounding towns and localities. So I wanted to help him by a simple visualization of the cycling time from his home to different localities in a radius of 100km. I used Shiny which is an open source R package that make it easy to build interactive web applications using R.
+So here is the breakdown of what I did:</p>
 <div id="finding-the-different-localities-in-a-radius-of-100km-from-bryans-home" class="section level3">
 <h3>1. Finding the different localities in a radius of 100Km from Bryan’s home:</h3>
 <p>For this, I used the package <code>geonames</code> which is an interface to the GeoNames global geographical database. To be able to use the library functions you need a username by creating an account using <a href="http://www.geonames.org/">Geonames website</a>.<br />
-I use the <code>GNfindNearbyPlaceName</code> function that take 5 arguments <code>lat</code>, <code>lng</code>, <code>radius</code>, <code>search</code>, and <code>maxRows</code>. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)</p>
+I use the <code>GNfindNearbyPlaceName</code> function that take 5 arguments <code>lat</code>, <code>lng</code>, <code>radius</code>, <code>search</code>,
+and <code>maxRows</code>. For this example I will use just 10 max rows representing 10 localities surrounding my location (i.e. 48.828583, 2.508224)</p>
 <pre class="r"><code># load the package
 library(geonames)
 # set your geonames username
@@ -32,7 +31,7 @@ head(loc1, n = 3)                            </code></pre>
 <pre><code>##   adminCode1     lng distance geonameId         toponymName countryId fcl
 ## 1         11 2.52488  1.61759   3029706       Bry-sur-Marne   3017382   P
 ## 2         11 2.49366   1.7245   3027105 Champigny-sur-Marne   3017382   P
-## 3         11 2.48333  1.90227   2990265    Nogent-sur-Marne   3017382   P
+## 3         11 2.48255  2.08969   2990265    Nogent-sur-Marne   3017382   P
 ##   population countryCode                name           fclName
 ## 1      16226          FR       Bry-sur-Marne city, village,...
 ## 2      76726          FR Champigny-sur-Marne city, village,...
@@ -44,7 +43,7 @@ head(loc1, n = 3)                            </code></pre>
 ##                                       fcodeName    adminName1      lat
 ## 1                               populated place Île-de-France 48.83811
 ## 2                               populated place Île-de-France 48.81642
-## 3 seat of a third-order administrative division Île-de-France 48.83333
+## 3 seat of a third-order administrative division Île-de-France 48.83669
 ##   fcode
 ## 1   PPL
 ## 2   PPL
@@ -55,7 +54,7 @@ head(loc2)</code></pre>
 <pre><code>##                   name     lng      lat distance
 ## 1        Bry-sur-Marne 2.52488 48.83811  1.61759
 ## 2  Champigny-sur-Marne 2.49366 48.81642   1.7245
-## 3     Nogent-sur-Marne 2.48333 48.83333  1.90227
+## 3     Nogent-sur-Marne 2.48255 48.83669  2.08969
 ## 4           Champignol  2.5056 48.80865  2.22481
 ## 5 Le Perreux-sur-Marne     2.5    48.85  2.45703
 ## 6    Joinville-le-Pont 2.47458 48.82538  2.49615</code></pre>
