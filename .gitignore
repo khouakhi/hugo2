@@ -3,7 +3,7 @@
 .RData
 .Ruserdata
 hugo.Rproj
-#config.toml
+config.toml
 web_page.Rproj
 instructions.txt
 #content/
